@@ -9,7 +9,7 @@ window = turtle.Screen()
 window.setup(1200 + 29, 800 + 3)
 window.bgpic(os.path.join(BASE_PATH, "images", "background.png"))
 window.screensize(1200, 800)
-window.tracer(n=2)
+#window.tracer(n=2)
 
 BASE_X, BASE_Y = 0, -300
 ENEMY_COUNT = 5
@@ -101,8 +101,28 @@ pic_path = os.path.join(BASE_PATH, "images", "base.gif")
 window.register_shape(pic_path)
 base.shape(pic_path)
 
+
+base_health = 2000
+
+
+def game_over():
+    return base_health < 0
+
+
+def check_inpact():
+    global base_health
+    for enemy_info in enemy_missiles:
+        if enemy_info['state'] != 'explode':
+            continue
+        enemy_missile = enemy_info['missile']
+        if enemy_missile.distance(BASE_X, BASE_Y) < enemy_info['radius'] * 10:
+            base_health -= 100
+
 while True:
     window.update()
+    check_inpact()
+    if game_over():
+        continue
     check_enemy_count()
     check_interceptions()
     move_missiles(missiles=our_missiles)
