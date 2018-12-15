@@ -63,6 +63,26 @@ class Missile:
     def y(self):
         return self.pen.ycor()
 
+class building:
+
+    def __init__(self, BASE_X, BASE_Y, pic_path):
+        self.pic_path = pic_path
+        base = turtle.Turtle()
+        base.hideturtle()
+        base.speed(0)
+        base.penup()
+        base.setpos(x=BASE_X, y=BASE_Y)
+        base.showturtle()
+#        base.pic_path = os.path.join(BASE_PATH, "images", "base.gif")
+        window.register_shape(pic_path)
+        base.shape(pic_path)
+        self.base = base
+
+
+
+def build():
+    info = building(x=BASE_X, y=BASE_Y, pic_path=os.path.join(BASE_PATH, "images", "base.gif")
+
 
 def fire_missile(x, y):
     info = Missile(color='white', x=BASE_X, y=BASE_Y, x2=x, y2=y)
@@ -104,15 +124,15 @@ window.onclick(fire_missile)
 our_missiles = []
 enemy_missiles = []
 
-base = turtle.Turtle()
-base.hideturtle()
-base.speed(0)
-base.penup()
-base.setpos(x=BASE_X, y=BASE_Y)
-base.showturtle()
-pic_path = os.path.join(BASE_PATH, "images", "base.gif")
-window.register_shape(pic_path)
-base.shape(pic_path)
+#base = turtle.Turtle()
+#base.hideturtle()
+#base.speed(0)
+#base.penup()
+#base.setpos(x=BASE_X, y=BASE_Y)
+#base.showturtle()
+#pic_path = os.path.join(BASE_PATH, "images", "base.gif")
+#window.register_shape(pic_path)
+#base.shape(pic_path)
 
 base_health = 2000
 
