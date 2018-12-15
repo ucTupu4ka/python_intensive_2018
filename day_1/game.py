@@ -76,7 +76,7 @@ def check_interceptions():
         our_missile = our_info['missile']
         for enemy_info in enemy_missiles:
             enemy_missile = enemy_info['missile']
-            if enemy_missile.distance(our_missile.xcor(), our_missile.ycor()) < 20:
+            if enemy_missile.distance(our_missile.xcor(), our_missile.ycor()) < our_info['radius'] * 10:
                 enemy_info['state'] = 'dead'
 
 
@@ -89,6 +89,17 @@ window.onclick(fire_missile)
 
 our_missiles = []
 enemy_missiles = []
+
+
+base = turtle.Turtle()
+base.hideturtle()
+base.speed(0)
+base.penup()
+base.setpos(x=BASE_X, y=BASE_Y)
+base.showturtle()
+pic_path = os.path.join(BASE_PATH, "images", "base.gif")
+window.register_shape(pic_path)
+base.shape(pic_path)
 
 while True:
     window.update()
