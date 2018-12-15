@@ -15,30 +15,43 @@ BASE_X, BASE_Y = 0, -300
 ENEMY_COUNT = 5
 
 
-def create_missile(color, x, y, x2, y2):
-    missile = turtle.Turtle(visible=False)
-    missile.speed(0)
-    missile.color(color)
-    missile.penup()
-    missile.setpos(x=x, y=y)
-    missile.pendown()
-    heading = missile.towards(x2, y2)
-    missile.setheading(heading)
-    missile.showturtle()
-    info = {'missile': missile, 'target': [x2, y2],
-            'state': 'launched', 'radius': 0}
-    return info
+
+class Missile:
+
+    def  __init__(self, x, y, color, x2, y2):
+        self.x = x
+        self.y = y
+        self.color = color
+
+        pen = turtle.Turtle(visible=False)
+        pen.speed(0)
+        pen.color(color)
+        pen.penup()
+        pen.setpos(x=x, y=y)
+        pen.pendown()
+        heading = pen.towards(x2, y2)
+        pen.setheading(heading)
+        pen.showturtle()
+        self.pen  = pen
+
+        self.state = 'launched'
+        self.target = x2, y2
+        self.radius = 0
+
+
+    def step(self):
+        pass
 
 
 def fire_missile(x, y):
-    info = create_missile(color='white', x=BASE_X, y=BASE_Y, x2=x, y2=y)
+    info =  Missile(color='white', x=BASE_X, y=BASE_Y, x2=x, y2=y)
     our_missiles.append(info)
 
 
 def fire_enemy_missile():
     x = random.randint(-600, 600)
     y = 380
-    info = create_missile(color='red', x=x, y=y, x2=BASE_X, y2=BASE_Y)
+    info = Missile(color='red', x=x, y=y, x2=BASE_X, y2=BASE_Y)
     enemy_missiles.append(info)
 
 
@@ -118,11 +131,12 @@ def check_inpact():
         if enemy_missile.distance(BASE_X, BASE_Y) < enemy_info['radius'] * 10:
             base_health -= 100
 
+
 while True:
     window.update()
-    check_inpact()
     if game_over():
         continue
+    check_inpact()
     check_enemy_count()
     check_interceptions()
     move_missiles(missiles=our_missiles)
